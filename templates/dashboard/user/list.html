@@ -1,0 +1,86 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% block content %}
+ <div class="page-container">
+    <!-- HEADER DESKTOP-->
+    {%include 'dashboard/userbar.html'%}
+    <!-- HEADER DESKTOP-->
+
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1">Product List</h2>
+                            <a class="au-btn au-btn-icon au-btn--blue" href="{% url 'product_create' %}">
+                                <i class="zmdi zmdi-plus"></i>add</a>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- DATA TABLE-->
+                        <div class="table-responsive m-b-40">
+                            <table class="table table-borderless table-data3">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                         <th>First name</th>
+                                        <th>Last name</th>
+                                        <th>Phone number</th>
+                                        <th>Created at</th>
+                                        <th></th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for user in users %}
+
+                                    <tr>
+
+                                        <td>{{ user.id }}</td>
+                                        <td><a href="{% url 'customer_order_list' id=user.id %}">{{ user.first_name }}</a></td>
+                                        <td>{{ user.last_name }}</td>
+                                        <td>{{ user.phone_number }}</td>
+                                        <td>{{ user.created_at }}</td>
+
+                                        <td>
+                                            <div class="table-data-feature">
+                                                <a class="item" data-toggle="tooltip" href="{% url 'user_edit' pk=user.id %}" data-placement="top" title="" data-original-title="Edit">
+                                                    <i class="zmdi zmdi-edit text-warning"></i>
+                                                </a>
+                                                <a class="item" data-toggle="tooltip" href="{% url 'user_delete' pk=user.id %}" data-placement="top" title="" data-original-title="Delete">
+                                                    <i class="zmdi zmdi-delete text-danger"></i>
+                                                </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
+     <script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('output');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+</script>
+{% endblock %}

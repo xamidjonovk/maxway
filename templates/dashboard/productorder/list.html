@@ -1,0 +1,75 @@
+
+{% extends 'dashboard/base.html' %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+ <div class="page-container">
+    <!-- HEADER DESKTOP-->
+    {%include 'dashboard/userbar.html'%}
+    <!-- HEADER DESKTOP-->
+
+    <!-- MAIN CONTENT-->
+    <div class="main-content">
+        <div class="section__content section__content--p30">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="overview-wrap">
+                            <h2 class="title-1">Order List</h2>
+
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <!-- DATA TABLE-->
+                        <div class="table-responsive m-b-40">
+                            <table class="table table-borderless table-data3">
+                                <thead>
+                                    <tr>
+                                        <th>Product</th>
+                                         <th>Price</th>
+                                        <th>Count</th>
+                                        <th>Total</th>
+                                        <th>Created at</th>
+
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for pro in productorders %}
+                                    <tr>
+
+                                        <td>{{ pro.title }}</td>
+                                        <td>{{ pro.price }}</td>
+                                        <td>{{ pro.count }}</td>
+                                        <td>{{ pro.count|mul:pro.price }}</td>
+                                        <td>{{ pro.created_at }}</td>
+
+
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- END DATA TABLE-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- END MAIN CONTENT-->
+    <!-- END PAGE CONTAINER-->
+</div>
+     <script>
+  var loadFile = function(event) {
+    var reader = new FileReader();
+    reader.onload = function(){
+      var output = document.getElementById('output');
+      output.src = reader.result;
+    };
+    reader.readAsDataURL(event.target.files[0]);
+  };
+</script>
+{% endblock %}
