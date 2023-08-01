@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_DB: max_way_db
+      POSTGRES_USER: max_way_user
+      POSTGRES_PASSWORD: root
+
+  web:
+    build: .
+    command: >
+      bash -c "
+        python3 manage.py migrate &&
+        python3 manage.py collectstatic --no-input &&
+        python3 manage.py init_superuser &&
+        gunicorn --reload -b 0.0.0.0:8000 config.wsgi --workers 1 --timeout 300 --log-level DEBUG
+      "
+    volumes:
+      - .:/code
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    environment:
+      DB_NAME: max_way_db
+      DB_USER: max_way_user
+      DB_PASSWORD: root
+      DB_HOST: db
+      DB_PORT: 5432
